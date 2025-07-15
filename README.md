@@ -71,6 +71,8 @@ npx ts-node src/fixtures/seed.ts
   - Password: `Password-Admin-1234&`
   - Role: `admin`
 
+**OR CHECK THE classic-rock-fixture.ts for more details**
+
 ---
 
 ## 🔒 Authentication & Roles
