@@ -1,73 +1,121 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 🎸 Classic Rock Music Library API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 🚀 Overview
+A secure NestJS REST API for managing your personal music library, inspired by classic rock and Spotify. This project demonstrates modern authentication, role management, and resource protection with a real-world use case.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 📚 Features
+- **User Registration & Login**: Email validation and two-factor authentication (2FA) via email code.
+- **Role Management**: `user` and `admin` roles with strict access control.
+- **Music Library**: Add, view, update, and delete your own music entries. Admins can view all users and all musics.
+- **Swagger UI**: Interactive API documentation and testing.
+- **Fixtures & Seeding**: Pre-filled database with classic rock musics and demo users.
+- **Email Service**: Local email testing with Maildev.
+- **Database**: PostgreSQL + TypeORM, ready for Docker.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Installation
+## 🎯 Subject
+Build a secure API for a music library with:
+- Registration, login, email validation, and 2FA
+- Role management (user/admin)
+- Private resources (each user only accesses their own library)
+- Admin access to all resources
+- Public/private endpoint management
+- Demo data: classic rock music
 
+---
+
+## 🛠️ Setup & Usage
+
+### Prerequisites
+- Docker & Docker Compose
+- Node.js (for local development)
+
+### Quick Start
+1. **Clone the repository**
+2. **Start the stack**:
+   ```bash
+   docker compose up
+   ```
+   This will start:
+   - PostgreSQL database
+   - Maildev (email testing)
+   - Adminer (DB web UI at http://localhost:8080)
+   - Seed script (populates DB with demo users and musics)
+
+3. **Start the NestJS API server** (in a separate terminal):
+   ```bash
+   npm install
+   npm run start:dev
+   ```
+
+4. **Access Swagger UI**: [http://localhost:3000/swagger](http://localhost:3000/swagger)
+
+### Manual Seeding
+If you want to reseed the database:
 ```bash
-$ npm install
+npx ts-node src/fixtures/seed.ts
 ```
 
-## Running the app
+---
 
-```bash
-# development
-$ npm run start
+## 👤 Default Users
+- **User**
+  - Email: `user@classicrock.com`
+  - Password: `testhashuser` (replace with a real hash or set your own)
+  - Role: `user`
+- **Admin**
+  - Email: `admin@classicrock.com`
+  - Password: `testhashadmin` (replace with a real hash or set your own)
+  - Role: `admin`
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
+## 🔒 Authentication & Roles
+- Register or use the seeded users.
+- Login, validate email, then use 2FA to get a JWT.
+- Use the JWT in Swagger's "Authorize" dialog to access private endpoints.
+- Only admins can access `/users` and `/music/all` endpoints.
+
+---
+
+## 📧 Email Testing
+- Access Maildev at [http://localhost:1080](http://localhost:1080) to view sent emails.
+
+## 🗄️ Database Access
+- Use Adminer at [http://localhost:8080](http://localhost:8080) to inspect or edit the database.
+
+---
+
+## 🏗️ Project Structure
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+src/
+  auth/        # Authentication, registration, 2FA
+  users/       # User entity, controller, service
+  music/       # Music entity, controller, service, DTOs
+  common/      # Guards and decorators for roles and public endpoints
+  fixtures/    # Demo data and seed script
 ```
+Other files:
+- `docker-compose.yaml` - Multi-service setup for DB, mail, adminer, and seeding
+- `Dockerfile` - For building the seed script container
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🛡️ Security & Best Practices
+- Passwords are hashed before storage
+- JWT authentication for all private endpoints
+- Role-based guards for admin-only access
+- DTO validation for all input data
+- CORS enabled for development
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 📄 License
+MIT
 
-## License
+---
 
-Nest is [MIT licensed](LICENSE).
+For any questions or improvements, feel free to open an issue or contribute!

@@ -26,4 +26,19 @@ export class UsersService {
     const user = this.userRepository.create(registerDto);
     return this.userRepository.save(user);
   }
+
+  async validateEmail(token: string): Promise<{ message: string }> {
+    const user = await this.userRepository.findOneBy({ validationToken: token });
+    if (!user) {
+      return { message: 'Invalid or expired token.' };
+    }
+    user.isEmailValidated = true;
+    user.validationToken = null;
+    await this.userRepository.save(user);
+    return { message: 'Email validated successfully for user: ' + user.email};
+  }
+
+  async update(user: User): Promise<User> {
+    return this.userRepository.save(user);
+  }
 }

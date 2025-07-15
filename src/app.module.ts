@@ -5,6 +5,8 @@ import { UsersModule } from './users/users.module';
 import { AuthGuard } from './common/guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
+import { RolesGuard } from './common/guards/roles.guard';
+import { MusicModule } from './music/music.module';
 
 @Module({
   imports: [
@@ -26,11 +28,16 @@ import { ConfigModule } from '@nestjs/config';
     }),
     AuthModule,
     UsersModule,
+    MusicModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
