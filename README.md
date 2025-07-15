@@ -64,11 +64,11 @@ npx ts-node src/fixtures/seed.ts
 ## 👤 Default Users
 - **User**
   - Email: `user@classicrock.com`
-  - Password: `testhashuser` (replace with a real hash or set your own)
+  - Password: `Password-User-1234&`
   - Role: `user`
 - **Admin**
   - Email: `admin@classicrock.com`
-  - Password: `testhashadmin` (replace with a real hash or set your own)
+  - Password: `Password-Admin-1234&`
   - Role: `admin`
 
 ---
