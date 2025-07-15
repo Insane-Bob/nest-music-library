@@ -1,5 +1,7 @@
 # 🎸 Classic Rock Music Library API
 
+https://github.com/Insane-Bob/nest-music-library
+
 ## 🚀 Overview
 A secure NestJS REST API for managing your personal music library, inspired by classic rock and Spotify. This project demonstrates modern authentication, role management, and resource protection with a real-world use case.
 
